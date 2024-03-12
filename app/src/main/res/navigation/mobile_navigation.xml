@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/navigation_list"
-        android:name="m.z.ratp.test.ui.list.ToiletsListFragment"
+        android:name="m.z.ratp.test.ui.fragment.ToiletsListFragment"
         android:label="@string/title_toilets_list"
         tools:layout="@layout/fragment_toilets_list" />
 
     <fragment
         android:id="@+id/navigation_map"
-        android:name="m.z.ratp.test.ui.map.ToiletsMapFragment"
+        android:name="m.z.ratp.test.ui.fragment.ToiletsMapFragment"
         android:label="@string/title_toilets_map"
         tools:layout="@layout/fragment_toilets_map" />
 

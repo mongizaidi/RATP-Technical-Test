@@ -2,4 +2,9 @@
     <string name="app_name">RATP Test</string>
     <string name="title_toilets_list">List</string>
     <string name="title_toilets_map">Map</string>
+    <string name="reduced_mobility_access">Reduced mobility access</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="distance_meters">%1$d meters away</string>
+    <string name="distance_kms">%1$d Kms away</string>
 </resources>

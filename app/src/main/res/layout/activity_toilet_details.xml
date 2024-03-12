@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ui.activity.ToiletDetailsActivity">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="m.z.ratp.test.ui.viewmodel.ToiletDetailsViewModel" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="@dimen/margin_large">
+
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@{viewModel.toilet.isPRMAccessible ? @drawable/ic_accessible_black_24 : @drawable/ic_door_sliding_24}" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_large"
+            android:text="@{viewModel.toilet.fullAddress}"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_large"
+            android:gravity="center_vertical"
+            android:text="@{viewModel.toilet.fields.openingHours}"
+            android:textColor="@color/black"
+            android:visibility="@{viewModel.toilet.fields.openingHours != null ? View.VISIBLE : View.GONE}"
+            app:drawableStartCompat="@drawable/ic_time_filled_24"
+            app:drawableTint="@color/blue" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_large"
+            android:gravity="center_vertical"
+            android:text="@{viewModel.toilet.distanceToUserLocation(context)}"
+            android:textColor="@color/black"
+            android:visibility="@{viewModel.toilet.distanceToUserLocation(context) != null ? View.VISIBLE : View.GONE}"
+            app:drawableStartCompat="@drawable/ic_route_black_24"
+            app:drawableTint="@color/blue" />
+
+    </LinearLayout>
+
+</layout>

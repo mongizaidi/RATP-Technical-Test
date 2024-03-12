@@ -1,23 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.list.ToiletsListFragment">
+    tools:context=".ui.fragment.ToiletsListFragment">
 
-    <TextView
-        android:id="@+id/text_list"
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="m.z.ratp.test.ui.viewmodel.ToiletsViewModel" />
+
+        <variable
+            name="adapter"
+            type="m.z.ratp.test.ui.adapter.ToiletAdapter" />
+
+    </data>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        app:onRefreshListener="@{() -> viewModel.fetchToilets(true)}"
+        app:refreshing="@{viewModel.showProgressBar}">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:visibility="@{viewModel.filteredToilets.size() == 0 ? View.GONE : View.VISIBLE}">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                app:adapter="@{adapter}"
+                app:data="@{viewModel.filteredToilets}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:scrollListener="@{viewModel.onRecyclerScrollListener}"
+                tools:listitem="@layout/item_toilet" />
+
+            <ProgressBar
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/margin_medium"
+                android:visibility="@{viewModel.showBottomProgressBar ? View.VISIBLE : View.GONE}" />
+
+        </LinearLayout>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+</layout>

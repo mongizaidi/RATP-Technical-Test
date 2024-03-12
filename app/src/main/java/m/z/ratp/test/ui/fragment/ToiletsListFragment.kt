@@ -1,14 +1,19 @@
-package m.z.ratp.test.ui.list
+package m.z.ratp.test.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import dagger.hilt.android.AndroidEntryPoint
 import m.z.ratp.test.databinding.FragmentToiletsListBinding
+import m.z.ratp.test.ui.activity.MainActivity
+import m.z.ratp.test.ui.adapter.ToiletAdapter
 
+/**
+ * Created by Mongi Zaidi on 06/03/2024.
+ */
+@AndroidEntryPoint
 class ToiletsListFragment : Fragment() {
 
     private var _binding: FragmentToiletsListBinding? = null
@@ -19,17 +24,16 @@ class ToiletsListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val toiletsListViewModel =
-            ViewModelProvider(this)[ToiletsListViewModel::class.java]
-
         _binding = FragmentToiletsListBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        binding.viewModel = (activity as MainActivity).viewModel
+        binding.lifecycleOwner = this
+        binding.adapter = ToiletAdapter(listOf(), activity as MainActivity)
+        return binding.root
+    }
 
-        val textView: TextView = binding.textList
-        toiletsListViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
-        return root
+    override fun onResume() {
+        super.onResume()
+        binding.viewModel?.filterToilets()
     }
 
     override fun onDestroyView() {

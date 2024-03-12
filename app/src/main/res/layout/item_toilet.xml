@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="toilet"
+            type="m.z.ratp.test.data.model.Toilet" />
+
+        <variable
+            name="listener"
+            type="m.z.ratp.test.ui.adapter.ToiletListener" />
+
+        <variable
+            name="isLast"
+            type="Boolean" />
+
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_large"
+        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginEnd="@dimen/margin_large"
+        android:onClick="@{() -> listener.onToiletClicked(toilet)}"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="@dimen/margin_small"
+        app:cardElevation="@dimen/margin_small"
+        app:layoutMarginBottom="@{isLast ? @dimen/margin_large : @dimen/zero_dp}">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:src="@{toilet.isPRMAccessible ? @drawable/ic_accessible_black_24 : @drawable/ic_door_sliding_24}" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_medium"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@{toilet.fullAddress}"
+                    android:textColor="@color/black" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_small"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_medium"
+                        android:gravity="center_vertical"
+                        android:text="@{toilet.fields.openingHours}"
+                        android:textColor="@color/black"
+                        android:visibility="@{toilet.fields.openingHours != null ? View.VISIBLE : View.GONE}"
+                        app:drawableStartCompat="@drawable/ic_time_filled_24"
+                        app:drawableTint="@color/blue" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="@{toilet.distanceToUserLocation(context)}"
+                        android:textColor="@color/black"
+                        android:visibility="@{toilet.distanceToUserLocation(context) != null ? View.VISIBLE : View.GONE}"
+                        app:drawableStartCompat="@drawable/ic_route_black_24"
+                        app:drawableTint="@color/blue" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</layout>
